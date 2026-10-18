@@ -21,13 +21,28 @@ express.
 
 * `postscript.parg` — the grammar source (the contract); each rule
   cites the guide page it derives from
-* the compiled artifact JSON is generated from it:
+* `postscript.json` — the compiled artifact (checksummed envelope),
+  compiled with the released parsanol:
 +
 ----
 parsanol parg compile postscript.parg -o postscript.json
 ----
 
+== CI
+
+CI installs the released `parsanol` gem and runs, on every push/PR:
+
+* `parsanol parg test postscript.parg` — the grammar's embedded
+  accept/reject smoke tests
+* a fresh compile checked for *payload parity* against the committed
+  artifact (envelope metadata — `checksum`, `compiler_version` —
+  stripped, since those legitimately change with each parsanol
+  release; the grammar payload must not)
+
 == Status
 
-Skeleton — the grammar sections to be extracted from the postscript
-gem's hand-written lexer/AST builder are marked inline.
+Framework — the token/literal grammar (whitespace, comments and DSC,
+integers/reals/radix, literal and hex strings with escapes and
+nesting, names, arrays/procedures/dictionaries) with embedded smoke
+tests; the grammar is level-agnostic (see claricle/postscript#4).
+The operator vocabulary stays registry metadata in the postscript gem.
