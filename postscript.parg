@@ -1,12 +1,28 @@
 // PostScript grammar — PARG source (parsanol grammar language).
 //
+// Normative source: the PostScript Language Guide
+// (claricle/postscript-guide — https://claricle.github.io/postscript-guide/).
+// Coverage contract for this grammar:
+//
+//   docs/syntax/tokens.adoc        -> lexer rules (tokens, whitespace, comments)
+//   docs/syntax/objects.adoc       -> object forms (simple vs composite)
+//   docs/syntax/data-types.adoc    -> literal shapes (integer/real/string/hex/name)
+//   docs/syntax/strings.adoc       -> literal () strings, <hex> strings, escapes
+//   docs/syntax/arrays.adoc        -> [ ... ] array syntax
+//   docs/syntax/dictionaries.adoc  -> << ... >> dictionary syntax
+//   docs/syntax/procedures.adoc    -> { ... } procedure syntax
+//   docs/syntax/operators.adoc     -> operator name rules
+//   docs/commands/**               -> the operator vocabulary the grammar
+//                                     must accept (300+ operators, per level)
+//   docs/levels/*                  -> Level 1/2/3 feature gating
+//
 // Issue: claricle/postscript#4. Compiles via the parsanol PARG
 // toolchain to the artifact the native engine registers:
 //
-//   parsanol parg compile grammars/postscript.parg -o grammars/postscript.json
+//   parsanol parg compile postscript.parg -o postscript.json
 //
-// Skeleton below marks the sections the real grammar must cover
-// (extracted from lib/postscript/source/{lexer,ast_builder}.rb):
+// Skeleton below — each commented rule cites the guide page it must
+// be developed from:
 
 // program := { ws | comment | literal | operator }
 // comment := "%" [^\n]*
