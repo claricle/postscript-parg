@@ -1,0 +1,33 @@
+= postscript-parg
+
+The PostScript grammar in https://github.com/parsanol/parsanol-rs[PARG] —
+the parsanol grammar language (ABNF-flavoured, PEG semantics).
+
+This repository is the canonical home of the grammar and its compiled
+artifact; the https://github.com/claricle/postscript[postscript] gem
+consumes the artifact for its native parser path
+(claricle/postscript#4).
+
+== Normative source
+
+The grammar is developed according to the
+https://claricle.github.io/postscript-guide/[PostScript Language Guide]
+(claricle/postscript-guide): `docs/syntax/*` defines the token and
+literal rules, `docs/commands/**` the operator vocabulary, and
+`docs/levels/*` the Level 1/2/3 feature gating the grammar must
+express.
+
+== Layout
+
+* `postscript.parg` — the grammar source (the contract); each rule
+  cites the guide page it derives from
+* the compiled artifact JSON is generated from it:
++
+----
+parsanol parg compile postscript.parg -o postscript.json
+----
+
+== Status
+
+Skeleton — the grammar sections to be extracted from the postscript
+gem's hand-written lexer/AST builder are marked inline.
