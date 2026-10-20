@@ -15,7 +15,7 @@ grammar PostScript version "0.1.0" {
 
   ## Program: any sequence of whitespace, comments, and objects.
   ## (guide: docs/syntax/tokens.adoc, docs/syntax/objects.adoc)
-  program = 0*( ws / dsc_comment / comment / object )
+  program = 0*( ws / dsc_comment as dsc / comment / object )
 
   ## Whitespace: NUL HT LF FF CR SPACE (guide: docs/syntax/tokens.adoc).
   ws = 1*( %x00 / %x09 / %x0A / %x0C / %x0D / %x20 )
@@ -27,10 +27,11 @@ grammar PostScript version "0.1.0" {
   ## (document structuring conventions; passes through to the model).
   dsc_comment = "%%" 0*( !(%x0A / %x0D) ANY )
 
-  ## Objects (guide: docs/syntax/objects.adoc).
+  ## Objects (guide: docs/syntax/objects.adoc). Every object is captured
+  ## under the name of its rule.
   ## Ordered choice: number/radix before name (a word is classified by
   ## shape, matching the lexer's scan_word_or_number + emit_word).
-  object = radix / real / integer / string / hex_string / dictionary / array / procedure / literal_name / name
+  object = radix as radix / real as real / integer as integer / string as string / hex_string as hex_string / dictionary as dictionary / array as array / procedure as procedure / literal_name as literal_name / name as name
 
   ## ------------------------------------------------------------------
   ## Numbers (guide: docs/syntax/data-types.adoc)
@@ -131,5 +132,15 @@ grammar PostScript version "0.1.0" {
     reject "(unterminated"
     reject "<hex"
     reject "[1 2"
+    # Each token is captured under its rule's name (the first capture
+    # of each name is checked).
+    capture "10 20 moveto" { integer: "10" name: "moveto" }
+    capture "-.002 6.02E23 scale" { real: "-.002" }
+    capture "16#FF setgray" { radix: "16#FF" }
+    capture "123abc print" { name: "123abc" }
+    capture "(a (b) c) show" { string: "(a (b) c)" }
+    capture "<4f 4b> print" { hex_string: "<4f 4b>" }
+    capture "/proc { 1 2 add } def" { literal_name: "/proc" }
+    capture "%%BeginSetup\n1 pop" { dsc: "%%BeginSetup" }
   }
 }
