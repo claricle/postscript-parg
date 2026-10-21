@@ -39,6 +39,18 @@ CI installs the released `parsanol` gem and runs, on every push/PR:
   stripped, since those legitimately change with each parsanol
   release; the grammar payload must not)
 
+== Operator vocabulary
+
+`operators.yml` — the 164-operator vocabulary extracted from the
+guide's docs/commands/references/*: per operator the introduction
+level (144 Level 1, 20 Level 2; `level_source` records how each was
+derived — canonical `*Level N* and later` markers, prose, or the
+inferred Level 1 for the font operators whose pages state no level),
+guide category, stack syntax, and summary. Consumed as REGISTRY
+METADATA per the level-gating decision in claricle/postscript#4 —
+the grammar stays level-agnostic. Regenerate from the guide; do not
+hand-edit entries except through a guide change.
+
 == Status
 
 Framework — the token/literal grammar (whitespace, comments and DSC,
