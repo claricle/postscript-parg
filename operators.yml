@@ -1,0 +1,1166 @@
+# PostScript operator vocabulary -- extracted from the PostScript Language
+# Guide (claricle/postscript-guide), docs/commands/references/*.adoc.
+#
+# 164 operators. `level` is the guide's stated introduction level
+# ("Level N" = available in Level N and later); `level_source` records how
+# each level was derived. Consumed as REGISTRY METADATA per the
+# level-gating decision in claricle/postscript#4 -- the grammar
+# (postscript.parg) stays level-agnostic. One exception noted inline:
+# the font operators' pages state no level; Level 1 is inferred per
+# levels/comparison.adoc ("Fonts: Single-byte" under Level 1).
+#
+# Regenerate with the guide as the source of truth; do not hand-edit
+# entries except through a guide change.
+
+
+
+
+
+operators:
+- name: "abs"
+  level: 1
+  level_source: "guide prose (Level N operator)"
+  category: "arithmetic-math"
+  syntax: "num1 abs num2"
+  summary: "Returns the absolute value (magnitude) of a number."
+
+- name: "add"
+  level: 1
+  level_source: "guide prose (Level N operator)"
+  category: "arithmetic-math"
+  syntax: "num1 num2 add sum"
+  summary: "Adds two numbers and returns their sum."
+
+- name: "aload"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "array-string"
+  syntax: "array aload \u2192 array\u2080 ... array\u2099\u208b\u2081 array"
+  summary: "Loads all elements of an array or packed array onto the operand stack."
+
+- name: "anchorsearch"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "array-string"
+  syntax: "string seek anchorsearch \u2192 post match true (if found)"
+  summary: "Tests whether a string begins with a specified prefix."
+
+- name: "arc"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "path-construction"
+  syntax: "x y r ang1 ang2 arc \u2192 -"
+  summary: "Appends a counterclockwise circular arc to the current path."
+
+- name: "arcn"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "path-construction"
+  syntax: "x y r ang1 ang2 arcn \u2192 -"
+  summary: "Appends a clockwise circular arc to the current path."
+
+- name: "arcto"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "path-construction"
+  syntax: "x1 y1 x2 y2 r arcto \u2192 xt1 yt1 xt2 yt2"
+  summary: "Appends an arc defined by two tangent lines and returns the tangent points."
+
+- name: "array"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "array-string"
+  syntax: "int array \u2192 array"
+  summary: "Creates a new array of specified length with elements initialized to null."
+
+- name: "ashow"
+  level: 1
+  level_source: "inferred: not stated on the page (fonts are Level 1 per levels/comparison.adoc)"
+  category: "font-text"
+  syntax: "ax ay string ashow \u2192 -"
+  summary: "Show text with uniform character spacing adjustment."
+
+- name: "astore"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "array-string"
+  syntax: "any\u2080 ... any\u2099\u208b\u2081 array astore \u2192 array"
+  summary: "Stores stack elements into an array."
+
+- name: "atan"
+  level: 1
+  level_source: "guide prose (Level N operator)"
+  category: "arithmetic-math"
+  syntax: "num den atan angle"
+  summary: "Returns the angle in degrees whose tangent is num/den."
+
+- name: "awidthshow"
+  level: 1
+  level_source: "inferred: not stated on the page (fonts are Level 1 per levels/comparison.adoc)"
+  category: "font-text"
+  syntax: "cx cy char ax ay string awidthshow \u2192 -"
+  summary: "Combine ashow and widthshow spacing adjustments."
+
+- name: "begin"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "dictionary"
+  syntax: "dict begin \u2192 \u2013"
+  summary: "Pushes a dictionary onto the dictionary stack, making it the current dictionary."
+
+- name: "bitshift"
+  level: 1
+  level_source: "guide prose (Level N operator)"
+  category: "arithmetic-math"
+  syntax: "int1 shift bitshift int2"
+  summary: "Shifts the binary representation of an integer left or right."
+
+- name: "brackets"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "array-string"
+  syntax: "\u2013 [ \u2192 mark"
+  summary: "Array construction operators that work together to create literal arrays in PostScript: `[` pushes a mark, `]` collects the stack above it into an array."
+
+- name: "ceiling"
+  level: 1
+  level_source: "guide prose (Level N operator)"
+  category: "arithmetic-math"
+  syntax: "num1 ceiling num2"
+  summary: "Returns the least integer value greater than or equal to a number."
+
+- name: "charpath"
+  level: 1
+  level_source: "guide prose (first mention)"
+  category: "font-text"
+  syntax: "string bool charpath \u2192 -"
+  summary: "Get character outlines as path."
+
+- name: "clear"
+  level: 1
+  level_source: "guide prose (Level N operator)"
+  category: "stack-manipulation"
+  syntax: "any1 ... anyn clear -"
+  summary: "Removes all elements from the operand stack, leaving it empty."
+
+- name: "cleartomark"
+  level: 1
+  level_source: "guide prose (Level N operator)"
+  category: "stack-manipulation"
+  syntax: "mark obj1 ... objn cleartomark -"
+  summary: "Removes all elements from the operand stack down to and including the topmost mark object."
+
+- name: "clip"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "painting"
+  syntax: "- clip \u2192 -"
+  summary: "Intersects the current clipping path with the current path using the non-zero winding rule."
+
+- name: "clippath"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "painting"
+  syntax: "- clippath \u2192 -"
+  summary: "Sets the current path to the current clipping path."
+
+- name: "closepath"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "path-construction"
+  syntax: "- closepath \u2192 -"
+  summary: "Closes the current subpath by adding a straight line back to its starting point."
+
+- name: "concat"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "transformations"
+  syntax: "matrix concat \u2192 -"
+  summary: "Concatenates a matrix with the current transformation matrix."
+
+- name: "concatmatrix"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "transformations"
+  syntax: "matrix1 matrix2 matrix3 concatmatrix \u2192 matrix3"
+  summary: "Multiplies two transformation matrices."
+
+- name: "copy"
+  level: 1
+  level_source: "guide prose (Level N operator)"
+  category: "stack-manipulation"
+  syntax: "any1 ... anyn n copy any1 ... anyn any1 ... anyn"
+  summary: "Duplicates the top n elements on the operand stack, or copies the value of one composite object into another."
+
+- name: "cos"
+  level: 1
+  level_source: "guide prose (Level N operator)"
+  category: "arithmetic-math"
+  syntax: "angle cos real"
+  summary: "Returns the cosine of an angle in degrees."
+
+- name: "count"
+  level: 1
+  level_source: "guide prose (Level N operator)"
+  category: "stack-manipulation"
+  syntax: "any1 ... anyn count any1 ... anyn n"
+  summary: "Counts the number of elements on the operand stack and pushes this count onto the stack."
+
+- name: "countdictstack"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "dictionary"
+  syntax: "\u2013 countdictstack \u2192 int"
+  summary: "Returns the number of dictionaries currently on the dictionary stack."
+
+- name: "counttomark"
+  level: 1
+  level_source: "guide prose (Level N operator)"
+  category: "stack-manipulation"
+  syntax: "mark obj1 ... objn counttomark mark obj1 ... objn n"
+  summary: "Counts the number of elements on the operand stack from the top down to (but not including) the topmost mark object."
+
+- name: "currentdash"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "graphics-state"
+  syntax: "\u2013 currentdash \u2192 array offset"
+  summary: "Returns current dash pattern and offset."
+
+- name: "currentdict"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "dictionary"
+  syntax: "\u2013 currentdict \u2192 dict"
+  summary: "Returns the current dictionary (top of dictionary stack)."
+
+- name: "currentfont"
+  level: 1
+  level_source: "inferred: not stated on the page (fonts are Level 1 per levels/comparison.adoc)"
+  category: "font-text"
+  syntax: "- currentfont \u2192 font"
+  summary: "Get current font dictionary from graphics state."
+
+- name: "currentgray"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "graphics-state"
+  syntax: "\u2013 currentgray \u2192 num"
+  summary: "Returns current color as gray value."
+
+- name: "currenthsbcolor"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "graphics-state"
+  syntax: "\u2013 currenthsbcolor \u2192 hue saturation brightness"
+  summary: "Returns current color as HSB values."
+
+- name: "currentlinecap"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "graphics-state"
+  syntax: "\u2013 currentlinecap \u2192 int"
+  summary: "Returns current line cap style."
+
+- name: "currentlinejoin"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "graphics-state"
+  syntax: "\u2013 currentlinejoin \u2192 int"
+  summary: "Returns current line join style."
+
+- name: "currentlinewidth"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "graphics-state"
+  syntax: "\u2013 currentlinewidth \u2192 num"
+  summary: "Returns current line width value."
+
+- name: "currentmatrix"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "transformations"
+  syntax: "matrix currentmatrix \u2192 matrix"
+  summary: "Gets the current transformation matrix from the graphics state."
+
+- name: "currentmiterlimit"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "graphics-state"
+  syntax: "\u2013 currentmiterlimit \u2192 num"
+  summary: "Returns current miter limit value."
+
+- name: "currentpoint"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "path-construction"
+  syntax: "- currentpoint \u2192 x y"
+  summary: "Returns the x and y coordinates of the current point."
+
+- name: "currentrgbcolor"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "graphics-state"
+  syntax: "\u2013 currentrgbcolor \u2192 red green blue"
+  summary: "Returns current color as RGB values."
+
+- name: "curveto"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "path-construction"
+  syntax: "x1 y1 x2 y2 x3 y3 curveto \u2192 -"
+  summary: "Adds a B\u00e9zier cubic curve segment to the current path."
+
+- name: "cvi"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "array-string"
+  syntax: "num cvi \u2192 int"
+  summary: "Converts a number or string to an integer."
+
+- name: "cvlit"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "array-string"
+  syntax: "any cvlit \u2192 any"
+  summary: "Converts an object to have the literal attribute."
+
+- name: "cvn"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "array-string"
+  syntax: "string cvn \u2192 name"
+  summary: "Converts a string to a name object."
+
+- name: "cvr"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "array-string"
+  syntax: "num cvr \u2192 real"
+  summary: "Converts a number or string to a real number."
+
+- name: "cvs"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "array-string"
+  syntax: "any string cvs \u2192 substring"
+  summary: "Converts any object to its string representation."
+
+- name: "cvx"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "array-string"
+  syntax: "any cvx \u2192 any"
+  summary: "Converts an object to have the executable attribute."
+
+- name: "def"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "dictionary"
+  syntax: "key value def \u2192 \u2013"
+  summary: "Associates a key with a value in the current dictionary."
+
+- name: "defaultmatrix"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "transformations"
+  syntax: "matrix defaultmatrix \u2192 matrix"
+  summary: "Gets the default transformation matrix for the current device."
+
+- name: "dict"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "dictionary"
+  syntax: "int dict \u2192 dict"
+  summary: "Creates a new empty dictionary with specified initial capacity."
+
+- name: "dictstack"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "dictionary"
+  syntax: "array dictstack \u2192 subarray"
+  summary: "Copies all dictionaries from the dictionary stack into an array."
+
+- name: "div"
+  level: 1
+  level_source: "guide prose (Level N operator)"
+  category: "arithmetic-math"
+  syntax: "num1 num2 div quotient"
+  summary: "Divides the first number by the second and returns a real number result."
+
+- name: "dtransform"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "transformations"
+  syntax: "dx dy dtransform \u2192 dx' dy'"
+  summary: "Transforms a distance vector from user space to device space."
+
+- name: "dup"
+  level: 1
+  level_source: "guide prose (Level N operator)"
+  category: "stack-manipulation"
+  syntax: "any dup any any"
+  summary: "Duplicates the top element on the operand stack, creating a second copy."
+
+- name: "end"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "dictionary"
+  syntax: "\u2013 end \u2192 \u2013"
+  summary: "Pops the current dictionary from the dictionary stack."
+
+- name: "eoclip"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "painting"
+  syntax: "- eoclip \u2192 -"
+  summary: "Intersects the current clipping path with the current path using the even-odd rule."
+
+- name: "eofill"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "painting"
+  syntax: "- eofill \u2192 -"
+  summary: "Paints the area enclosed by the current path using the even-odd rule."
+
+- name: "exch"
+  level: 1
+  level_source: "guide prose (Level N operator)"
+  category: "stack-manipulation"
+  syntax: "any1 any2 exch any2 any1"
+  summary: "Exchanges the positions of the top two elements on the operand stack."
+
+- name: "exec"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "control-flow"
+  syntax: "any exec \u2192 \u2013"
+  summary: "Executes an object immediately."
+
+- name: "exit"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "control-flow"
+  syntax: "\u2013 exit \u2192 \u2013"
+  summary: "Terminates the innermost enclosing loop."
+
+- name: "exp"
+  level: 1
+  level_source: "guide prose (Level N operator)"
+  category: "arithmetic-math"
+  syntax: "base exponent exp real"
+  summary: "Raises a base to a power (exponentiation)."
+
+- name: "fill"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "painting"
+  syntax: "- fill \u2192 -"
+  summary: "Paints the area enclosed by the current path with the current color."
+
+- name: "findfont"
+  level: 1
+  level_source: "inferred: not stated on the page (fonts are Level 1 per levels/comparison.adoc)"
+  category: "font-text"
+  syntax: "key findfont font"
+  summary: "Obtain font dictionary by name."
+
+- name: "floor"
+  level: 1
+  level_source: "guide prose (Level N operator)"
+  category: "arithmetic-math"
+  syntax: "num1 floor num2"
+  summary: "Returns the greatest integer value less than or equal to a number."
+
+- name: "for"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "control-flow"
+  syntax: "initial increment limit proc for \u2192 \u2013"
+  summary: "Executes a procedure repeatedly with a numeric control variable."
+
+- name: "forall"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "array-string"
+  syntax: "array proc forall \u2192 \u2013"
+  summary: "Executes a procedure for each element of an array, packed array, dictionary, or string."
+
+- name: "get"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "array-string"
+  syntax: "array index get \u2192 any"
+  summary: "Retrieves a single element from an array, packed array, dictionary, or string."
+
+- name: "getinterval"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "array-string"
+  syntax: "array index count getinterval \u2192 subarray"
+  summary: "Extracts a subsequence from an array, packed array, or string."
+
+- name: "grestore"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "graphics-state"
+  syntax: "\u2013 grestore \u2192 \u2013"
+  summary: "Restores the graphics state from the top of the graphics state stack."
+
+- name: "grestoreall"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "graphics-state"
+  syntax: "\u2013 grestoreall \u2192 \u2013"
+  summary: "Restores graphics state to bottommost saved level."
+
+- name: "gsave"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "graphics-state"
+  syntax: "\u2013 gsave \u2192 \u2013"
+  summary: "Pushes a copy of the current graphics state onto the graphics state stack."
+
+- name: "identmatrix"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "transformations"
+  syntax: "matrix identmatrix \u2192 matrix"
+  summary: "Replaces array contents with identity matrix values."
+
+- name: "idiv"
+  level: 1
+  level_source: "guide prose (Level N operator)"
+  category: "arithmetic-math"
+  syntax: "int1 int2 idiv quotient"
+  summary: "Divides two integers and returns the integer quotient, discarding any fractional part."
+
+- name: "idtransform"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "transformations"
+  syntax: "dx' dy' idtransform \u2192 dx dy"
+  summary: "Transforms a distance vector from device space to user space (inverse delta transform)."
+
+- name: "if"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "control-flow"
+  syntax: "bool proc if \u2192 \u2013"
+  summary: "Conditionally executes a procedure based on a boolean value."
+
+- name: "ifelse"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "control-flow"
+  syntax: "bool proc1 proc2 ifelse \u2192 \u2013"
+  summary: "Conditionally executes one of two procedures based on a boolean value."
+
+- name: "initmatrix"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "transformations"
+  syntax: "- initmatrix \u2192 -"
+  summary: "Resets the current transformation matrix to the device default."
+
+- name: "invertmatrix"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "transformations"
+  syntax: "matrix1 matrix2 invertmatrix \u2192 matrix2"
+  summary: "Computes the inverse of a transformation matrix."
+
+- name: "itransform"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "transformations"
+  syntax: "x' y' itransform \u2192 x y"
+  summary: "Transforms coordinates from device space to user space (inverse transform)."
+
+- name: "known"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "dictionary"
+  syntax: "dict key known \u2192 bool"
+  summary: "Tests whether a specific dictionary contains a given key."
+
+- name: "length"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "array-string"
+  syntax: "array length \u2192 int"
+  summary: "Returns the number of elements in an array, packed array, string, dictionary, or name."
+
+- name: "lineto"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "path-construction"
+  syntax: "x y lineto \u2192 -"
+  summary: "Appends a straight line segment to the current path."
+
+- name: "ln"
+  level: 1
+  level_source: "guide prose (Level N operator)"
+  category: "arithmetic-math"
+  syntax: "num ln real"
+  summary: "Returns the natural logarithm (base e) of a number."
+
+- name: "load"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "dictionary"
+  syntax: "key load \u2192 value"
+  summary: "Searches dictionary stack for a key and returns its associated value."
+
+- name: "log"
+  level: 1
+  level_source: "guide prose (Level N operator)"
+  category: "arithmetic-math"
+  syntax: "num log real"
+  summary: "Returns the common logarithm (base 10) of a number."
+
+- name: "loop"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "control-flow"
+  syntax: "proc loop \u2192 \u2013"
+  summary: "Repeatedly executes a procedure indefinitely until exit is called."
+
+- name: "makefont"
+  level: 1
+  level_source: "inferred: not stated on the page (fonts are Level 1 per levels/comparison.adoc)"
+  category: "font-text"
+  syntax: "font matrix makefont \u2192 font'"
+  summary: "Transform font by arbitrary matrix."
+
+- name: "mark"
+  level: 1
+  level_source: "guide prose (Level N operator)"
+  category: "stack-manipulation"
+  syntax: "- mark mark"
+  summary: "Pushes a mark object onto the operand stack to serve as a delimiter or reference point."
+
+- name: "matrix"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "transformations"
+  syntax: "- matrix \u2192 matrix"
+  summary: "Creates an identity transformation matrix."
+
+- name: "maxlength"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "dictionary"
+  syntax: "dict maxlength \u2192 int"
+  summary: "Returns the maximum capacity of a dictionary."
+
+- name: "mod"
+  level: 1
+  level_source: "guide prose (Level N operator)"
+  category: "arithmetic-math"
+  syntax: "int1 int2 mod remainder"
+  summary: "Returns the remainder from dividing two integers."
+
+- name: "moveto"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "path-construction"
+  syntax: "x y moveto \u2192 -"
+  summary: "Sets the current point to specified coordinates, starting a new subpath."
+
+- name: "mul"
+  level: 1
+  level_source: "guide prose (Level N operator)"
+  category: "arithmetic-math"
+  syntax: "num1 num2 mul product"
+  summary: "Multiplies two numbers and returns their product."
+
+- name: "neg"
+  level: 1
+  level_source: "guide prose (Level N operator)"
+  category: "arithmetic-math"
+  syntax: "num1 neg num2"
+  summary: "Returns the negative (opposite sign) of a number."
+
+- name: "newpath"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "path-construction"
+  syntax: "- newpath \u2192 -"
+  summary: "Initializes the current path to empty, making the current point undefined."
+
+- name: "pop"
+  level: 1
+  level_source: "guide prose (Level N operator)"
+  category: "stack-manipulation"
+  syntax: "any pop -"
+  summary: "Removes the top element from the operand stack and discards it."
+
+- name: "psindex"
+  level: 1
+  level_source: "guide prose (Level N operator)"
+  category: "stack-manipulation"
+  syntax: "anyn ... any0 n index anyn ... any0 anyn"
+  summary: "Duplicates the nth element from the top of the operand stack, where n is counted from 0."
+
+- name: "put"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "array-string"
+  syntax: "array index any put \u2192 \u2013"
+  summary: "Stores a value into an array, dictionary, or string element."
+
+- name: "putinterval"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "array-string"
+  syntax: "array1 index array2 putinterval \u2192 \u2013"
+  summary: "Replaces a subsequence of an array or string with the contents of another array or string."
+
+- name: "quit"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "control-flow"
+  syntax: "\u2013 quit \u2192 \u2013"
+  summary: "Terminates operation of the PostScript interpreter."
+
+- name: "rand"
+  level: 1
+  level_source: "guide prose (Level N operator)"
+  category: "arithmetic-math"
+  syntax: "- rand int"
+  summary: "Generates a pseudo-random integer."
+
+- name: "rcheck"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "array-string"
+  syntax: "array rcheck \u2192 bool"
+  summary: "Tests whether an object's access attribute permits reading its value."
+
+- name: "rcurveto"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "path-construction"
+  syntax: "dx1 dy1 dx2 dy2 dx3 dy3 rcurveto \u2192 -"
+  summary: "Adds a B\u00e9zier cubic curve segment to the current path using relative coordinates."
+
+- name: "repeat"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "control-flow"
+  syntax: "int proc repeat \u2192 \u2013"
+  summary: "Executes a procedure a specified number of times."
+
+- name: "rlineto"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "path-construction"
+  syntax: "dx dy rlineto \u2192 -"
+  summary: "Appends a straight line segment to the current path using relative coordinates."
+
+- name: "rmoveto"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "path-construction"
+  syntax: "dx dy rmoveto \u2192 -"
+  summary: "Sets the current point relative to the previous point, starting a new subpath."
+
+- name: "roll"
+  level: 1
+  level_source: "guide prose (Level N operator)"
+  category: "stack-manipulation"
+  syntax: "anyn-1 ... any0 n j roll any(j-1) mod n ... any0 anyn-1 ... anyj mod n"
+  summary: "Performs a circular shift of n elements on the operand stack by j positions."
+
+- name: "rotate"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "transformations"
+  syntax: "angle rotate \u2192 -"
+  summary: "Rotates the coordinate system axes."
+
+- name: "round"
+  level: 1
+  level_source: "guide prose (Level N operator)"
+  category: "arithmetic-math"
+  syntax: "num1 round num2"
+  summary: "Returns the integer value nearest to a number."
+
+- name: "rrand"
+  level: 1
+  level_source: "guide prose (Level N operator)"
+  category: "arithmetic-math"
+  syntax: "- rrand int"
+  summary: "Returns the current state of the random number generator."
+
+- name: "scale"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "transformations"
+  syntax: "sx sy scale \u2192 -"
+  summary: "Changes the unit size of the coordinate system."
+
+- name: "scalefont"
+  level: 1
+  level_source: "inferred: not stated on the page (fonts are Level 1 per levels/comparison.adoc)"
+  category: "font-text"
+  syntax: "font scale scalefont font'"
+  summary: "Scale font by uniform factor."
+
+- name: "search"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "array-string"
+  syntax: "string seek search \u2192 post match pre true (if found)"
+  summary: "Searches for the first occurrence of a substring within a string."
+
+- name: "setdash"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "graphics-state"
+  syntax: "array offset setdash \u2192 \u2013"
+  summary: "Sets the dash pattern for stroking operations."
+
+- name: "setfont"
+  level: 1
+  level_source: "inferred: not stated on the page (fonts are Level 1 per levels/comparison.adoc)"
+  category: "font-text"
+  syntax: "font setfont \u2192 -"
+  summary: "Establish current font in graphics state."
+
+- name: "setgray"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "graphics-state"
+  syntax: "num setgray \u2192 \u2013"
+  summary: "Sets the current gray level for painting operations."
+
+- name: "sethsbcolor"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "graphics-state"
+  syntax: "hue saturation brightness sethsbcolor \u2192 \u2013"
+  summary: "Sets the current color using HSB (Hue-Saturation-Brightness) values."
+
+- name: "setlinecap"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "graphics-state"
+  syntax: "int setlinecap \u2192 \u2013"
+  summary: "Sets the line cap style for stroking operations."
+
+- name: "setlinejoin"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "graphics-state"
+  syntax: "int setlinejoin \u2192 \u2013"
+  summary: "Sets the line join style for stroking operations."
+
+- name: "setlinewidth"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "graphics-state"
+  syntax: "num setlinewidth \u2192 \u2013"
+  summary: "Sets the line width for stroking operations."
+
+- name: "setmatrix"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "transformations"
+  syntax: "matrix setmatrix \u2192 -"
+  summary: "Replaces the current transformation matrix with a specified matrix."
+
+- name: "setmiterlimit"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "graphics-state"
+  syntax: "num setmiterlimit \u2192 \u2013"
+  summary: "Sets the miter limit for line joins."
+
+- name: "setrgbcolor"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "graphics-state"
+  syntax: "red green blue setrgbcolor \u2192 \u2013"
+  summary: "Sets the current RGB color for painting operations."
+
+- name: "sin"
+  level: 1
+  level_source: "guide prose (Level N operator)"
+  category: "arithmetic-math"
+  syntax: "angle sin real"
+  summary: "Returns the sine of an angle in degrees."
+
+- name: "sqrt"
+  level: 1
+  level_source: "guide prose (Level N operator)"
+  category: "arithmetic-math"
+  syntax: "num sqrt real"
+  summary: "Returns the square root of a number."
+
+- name: "srand"
+  level: 1
+  level_source: "guide prose (Level N operator)"
+  category: "arithmetic-math"
+  syntax: "int srand -"
+  summary: "Seeds the random number generator with a specific value."
+
+- name: "stop"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "control-flow"
+  syntax: "\u2013 stop \u2192 \u2013"
+  summary: "Terminates execution of the innermost stopped context."
+
+- name: "stopped"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "control-flow"
+  syntax: "any stopped \u2192 bool"
+  summary: "Executes an object with error catching capability."
+
+- name: "store"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "dictionary"
+  syntax: "key value store \u2192 \u2013"
+  summary: "Stores a value in the dictionary stack (searches for existing key first)."
+
+- name: "string"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "array-string"
+  syntax: "int string \u2192 string"
+  summary: "Creates a new string of specified length with all elements initialized to zero."
+
+- name: "stringwidth"
+  level: 1
+  level_source: "inferred: not stated on the page (fonts are Level 1 per levels/comparison.adoc)"
+  category: "font-text"
+  syntax: "string stringwidth \u2192 wx wy"
+  summary: "Calculate text width and displacement."
+
+- name: "stroke"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "painting"
+  syntax: "- stroke \u2192 -"
+  summary: "Paints a line following the current path using current line parameters."
+
+- name: "strokepath"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "painting"
+  syntax: "- strokepath \u2192 -"
+  summary: "Converts the stroke of the current path to an outline path."
+
+- name: "sub"
+  level: 1
+  level_source: "guide prose (Level N operator)"
+  category: "arithmetic-math"
+  syntax: "num1 num2 sub difference"
+  summary: "Subtracts the second number from the first and returns the difference."
+
+- name: "token"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "array-string"
+  syntax: "file token \u2192 any true (if token found)"
+  summary: "Parses and returns the next PostScript token from a file or string."
+
+- name: "transform"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "transformations"
+  syntax: "x y transform \u2192 x' y'"
+  summary: "Transforms coordinates from user space to device space."
+
+- name: "translate"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "transformations"
+  syntax: "tx ty translate \u2192 -"
+  summary: "Moves the origin of the user coordinate system."
+
+- name: "truncate"
+  level: 1
+  level_source: "guide prose (Level N operator)"
+  category: "arithmetic-math"
+  syntax: "num1 truncate num2"
+  summary: "Truncates a number toward zero by removing its fractional part."
+
+- name: "type"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "array-string"
+  syntax: "any type \u2192 name"
+  summary: "Returns a name identifying the type of an object."
+
+- name: "wcheck"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "array-string"
+  syntax: "array wcheck \u2192 bool"
+  summary: "Tests whether an object's access attribute permits writing to its value."
+
+- name: "where"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "dictionary"
+  syntax: "key where \u2192 dict true (if found)"
+  summary: "Determines which dictionary on the dictionary stack contains a given key."
+
+- name: "widthshow"
+  level: 1
+  level_source: "inferred: not stated on the page (fonts are Level 1 per levels/comparison.adoc)"
+  category: "font-text"
+  syntax: "cx cy char string widthshow \u2192 -"
+  summary: "Show text with selective character width adjustment."
+
+- name: "xcheck"
+  level: 1
+  level_source: "guide marker (*Level N* and later)"
+  category: "array-string"
+  syntax: "any xcheck \u2192 bool"
+  summary: "Tests whether an object has the executable attribute."
+
+- name: "arct"
+  level: 2
+  level_source: "guide marker (*Level N* and later)"
+  category: "path-construction"
+  syntax: "x1 y1 x2 y2 r arct \u2192 -"
+  summary: "Appends an arc defined by two tangent lines to the current path."
+
+- name: "cshow"
+  level: 2
+  level_source: "guide marker (*Level N* and later)"
+  category: "font-text"
+  syntax: "proc string cshow \u2192 -"
+  summary: "Show text with procedure invoked for each character (Level 2)."
+
+- name: "currentcmykcolor"
+  level: 2
+  level_source: "guide marker (*Level N* and later)"
+  category: "graphics-state"
+  syntax: "\u2013 currentcmykcolor \u2192 cyan magenta yellow black"
+  summary: "Returns current color as CMYK values."
+
+- name: "currentgstate"
+  level: 2
+  level_source: "guide marker (*Level N* and later)"
+  category: "graphics-state"
+  syntax: "gstate currentgstate \u2192 gstate"
+  summary: "Updates a gstate object with current graphics state."
+
+- name: "definefont"
+  level: 2
+  level_source: "guide prose (first mention)"
+  category: "font-text"
+  syntax: "key font definefont \u2192 font"
+  summary: "Register font in font directory."
+
+- name: "gstate"
+  level: 2
+  level_source: "guide marker (*Level N* and later)"
+  category: "graphics-state"
+  syntax: "\u2013 gstate \u2192 gstate"
+  summary: "Creates a graphics state object."
+
+- name: "kshow"
+  level: 2
+  level_source: "guide prose (first mention)"
+  category: "font-text"
+  syntax: "proc string kshow \u2192 -"
+  summary: "Show text with kerning procedure between characters."
+
+- name: "packedarray"
+  level: 2
+  level_source: "guide marker (*Level N* and later)"
+  category: "array-string"
+  syntax: "any\u2080 ... any\u2099\u208b\u2081 n packedarray \u2192 packedarray"
+  summary: "Creates a read-only packed array from objects on the stack (Level 2)."
+
+- name: "rectclip"
+  level: 2
+  level_source: "guide marker (*Level N* and later)"
+  category: "painting"
+  syntax: "x y width height rectclip \u2192 -"
+  summary: "Intersects the current clipping path with one or more rectangles."
+
+- name: "rectfill"
+  level: 2
+  level_source: "guide marker (*Level N* and later)"
+  category: "painting"
+  syntax: "x y width height rectfill \u2192 -"
+  summary: "Fills one or more rectangles with the current color."
+
+- name: "rectstroke"
+  level: 2
+  level_source: "guide marker (*Level N* and later)"
+  category: "painting"
+  syntax: "x y width height rectstroke \u2192 -"
+  summary: "Strokes one or more rectangles with current line parameters."
+
+- name: "setcmykcolor"
+  level: 2
+  level_source: "guide marker (*Level N* and later)"
+  category: "graphics-state"
+  syntax: "cyan magenta yellow black setcmykcolor \u2192 \u2013"
+  summary: "Sets the current CMYK color for painting operations."
+
+- name: "setgstate"
+  level: 2
+  level_source: "guide marker (*Level N* and later)"
+  category: "graphics-state"
+  syntax: "gstate setgstate \u2192 \u2013"
+  summary: "Replaces current graphics state from a gstate object."
+
+- name: "show"
+  level: 2
+  level_source: "guide prose (first mention)"
+  category: "font-text"
+  syntax: "string show \u2192 -"
+  summary: "Paint text string at current point."
+
+- name: "ueofill"
+  level: 2
+  level_source: "guide marker (*Level N* and later)"
+  category: "painting"
+  syntax: "userpath ueofill \u2192 -"
+  summary: "Interprets a user path definition and fills using the even-odd rule."
+
+- name: "ufill"
+  level: 2
+  level_source: "guide marker (*Level N* and later)"
+  category: "painting"
+  syntax: "userpath ufill \u2192 -"
+  summary: "Interprets a user path definition and fills the resulting path."
+
+- name: "undef"
+  level: 2
+  level_source: "guide marker (*Level N* and later)"
+  category: "dictionary"
+  syntax: "dict key undef \u2192 \u2013"
+  summary: "Removes a key and its associated value from a dictionary (Level 2)."
+
+- name: "undefinefont"
+  level: 2
+  level_source: "guide marker (*Level N* and later)"
+  category: "font-text"
+  syntax: "key undefinefont \u2192 -"
+  summary: "Remove font from font directory (Level 2)."
+
+- name: "ustroke"
+  level: 2
+  level_source: "guide marker (*Level N* and later)"
+  category: "painting"
+  syntax: "userpath ustroke \u2192 -"
+  summary: "Interprets a user path definition and strokes the resulting path."
+
+- name: "ustrokepath"
+  level: 2
+  level_source: "guide marker (*Level N* and later)"
+  category: "painting"
+  syntax: "userpath ustrokepath \u2192 -"
+  summary: "Converts a user path stroke to an outline path."
