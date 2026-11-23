@@ -23,7 +23,11 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.4'
-      - run: gem install parsanol --no-document
+      # Pinned to the compiler that built the committed artifact (its
+      # envelope records compiler_version) — a floating install breaks the
+      # payload-parity check on every parsanol patch release. Mirrors
+      # etassia-grammar's CI contract and claricle/postscript's grammar.yml.
+      - run: gem install parsanol --no-document -v "$(ruby -rjson -e 'print JSON.parse(File.read("postscript.json"))["compiler_version"]')"
       - name: Grammar tests (embedded accept/reject)
         run: parsanol parg test postscript.parg
       - name: Compile and verify committed artifact payload
