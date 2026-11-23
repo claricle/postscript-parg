@@ -14,9 +14,15 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v6
+      # '3.4' must match claricle/postscript's grammar.yml: the artifact's
+      # unicode_tables payload key embeds the compiling interpreter's exact
+      # version ("onigmo (Ruby X.Y.Z)"), so payload parity only holds when
+      # both repos compile and verify under the same ruby. Bumping this
+      # (or the patch setup-ruby resolves) requires recompiling
+      # postscript.json.
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.3'
+          ruby-version: '3.4'
       - run: gem install parsanol --no-document
       - name: Grammar tests (embedded accept/reject)
         run: parsanol parg test postscript.parg
